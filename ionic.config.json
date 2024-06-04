@@ -1,0 +1,7 @@
+{
+  "name": "YipYipNEW",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
