@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Buscador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="search-container">
+    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchInput($event)" placeholder="Buscar..." class="searchbar"></ion-searchbar>
+
+    <div *ngIf="searchResult">
+      <ion-card *ngIf="searchResult.metadata">
+        <ion-card-header>
+          <ion-card-title>{{ searchResult.metadata.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p><strong>DOI:</strong> {{ searchResult.metadata.DOI }}</p>
+          <p><strong>URL:</strong> <a [href]="searchResult.metadata.URL" target="_blank" class="URL">{{ searchResult.metadata.URL }}</a></p>
+          <p><strong>Autores:</strong></p>
+          <ul>
+            <li *ngFor="let author of searchResult.metadata.author">{{ author.given }} {{ author.family }}</li>
+          </ul>
+          <p><strong>ID:</strong> {{ searchResult.metadata.id }}</p>
+          <p><strong>Año de publicación:</strong> {{ searchResult.metadata.year }}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <div *ngIf="searchResult.citations">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Citaciones</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ul>
+              <li *ngFor="let citation of searchResult.citations">
+                <p>{{ citation.citation }}</p>
+                <p><strong>Estilo:</strong> {{ citation.style_fullname }}</p>
+                <p><strong>Formato:</strong> {{ citation.style_shortname }}</p>
+              </li>
+            </ul>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+
+    <div class="ion-text-center no-results" *ngIf="!searchResult && searchTerm !== ''">
+      <p>No se encontraron resultados para "{{ searchTerm }}"</p>
+    </div>
+  </div>
+</ion-content>

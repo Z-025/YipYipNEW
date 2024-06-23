@@ -1,15 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-
 import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-
-
   beforeEach(async () => {
-
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -28,9 +23,10 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
-    expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].textContent).toContain('Inbox');
-    expect(menuItems[1].textContent).toContain('Outbox');
+    expect(menuItems.length).toEqual(3);
+    expect(menuItems[0].textContent).toContain('Login');
+    expect(menuItems[1].textContent).toContain('Signup');
+    expect(menuItems[2].textContent).toContain('Perfil');
   });
 
   it('should have urls', () => {
@@ -38,9 +34,9 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
-    expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/folder/inbox');
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/folder/outbox');
+    expect(menuItems.length).toEqual(3); // actualizar este número si cambian las páginas
+    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/login');
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/sign-Up');
+    expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/Perfil');
   });
-
 });

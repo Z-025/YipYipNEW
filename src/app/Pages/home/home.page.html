@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ home }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  
+      <div class="centered-container">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Bienvenido/a</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- Interpolación del nombre de usuario -->
+            <strong>{{ username }}</strong>
+          </ion-card-content>
+        </ion-card>
+      </div>
+</ion-content>
+    
+
+
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button (click)="navigateTo('buscador')">
+          <ion-icon name="search"></ion-icon>
+          <ion-label>Buscador</ion-label>
+        </ion-tab-button>
+        <ion-tab-button (click)="navigateTo('historial')">
+          <ion-icon name="time"></ion-icon>
+          <ion-label>Historial</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+  

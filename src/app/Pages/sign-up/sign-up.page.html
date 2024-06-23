@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="medium">
+  <ion-card class="profile-content">
+    <div align="center" class="image">
+      <ion-avatar>
+        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+    </div>
+
+    <form (ngSubmit)="register()" class="form">
+      <ion-item>
+        <ion-label position="floating">Usuario</ion-label>
+        <ion-input [(ngModel)]="user.username" name="username" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Correo Electrónico</ion-label>
+        <ion-input type="email" [(ngModel)]="user.correo" name="correo" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">ORCID ID</ion-label>
+        <ion-input [(ngModel)]="user.orcid" name="orcid" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="user.nombre" name="nombre" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input [(ngModel)]="user.apellido" name="apellido" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fecha de Nacimiento</ion-label>
+        <ion-input type="date" [(ngModel)]="user.fechaNacimiento" name="fechaNacimiento" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Nivel de Educación</ion-label>
+        <ion-select [(ngModel)]="user.nivelEducacion" name="nivelEducacion" required>
+          <ion-select-option value="Basica">Educación Básica</ion-select-option>
+          <ion-select-option value="Media">Educación Media</ion-select-option>
+          <ion-select-option value="Superior">Educación Superior</ion-select-option>
+          <ion-select-option value="Posgrado">Posgrado</ion-select-option>
+          <ion-select-option value="Doctorado">Doctorado</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Área de interés</ion-label>
+        <ion-select [(ngModel)]="user.areaInteres" name="areaInteres" required>
+          <ion-select-option value="Ingenieria">Ingeniería</ion-select-option>
+          <ion-select-option value="Matematicas">Matemáticas</ion-select-option>
+          <ion-select-option value="Arte y Cultura">Arte y Cultura</ion-select-option>
+          <ion-select-option value="Ciencias Sociales">Ciencias Sociales</ion-select-option>
+          <ion-select-option value="Medicina">Medicina</ion-select-option>
+          <ion-select-option value="Astrofisica">Astrofísica</ion-select-option>
+          <ion-select-option value="Cambio Climatico">Cambio Climático</ion-select-option>
+          <ion-select-option value="Biologia">Biología</ion-select-option>
+          <ion-select-option value="Fisica">Física</ion-select-option>
+          <ion-select-option value="Informatica">Informática</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-button expand="full" type="submit" class="submit-button">Registrarse</ion-button>
+    </form>
+  </ion-card>
+</ion-content>
