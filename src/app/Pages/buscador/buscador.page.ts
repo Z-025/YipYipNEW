@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Services/api.service';
+import { Plugins, Capacitor } from '@capacitor/core';
+const { BarcodeScanner } = Plugins;
 
 @Component({
   selector: 'app-buscador',
@@ -37,5 +39,21 @@ export class BuscadorPage {
         this.searchResult = null;
       }
     );
+  }
+
+  async startScan() {
+    if (Capacitor.isPluginAvailable('BarcodeScanner')) {
+      try {
+        const result = await BarcodeScanner['startScan'](); // Corregido aquí
+        if (!result.cancelled) {
+          this.searchTerm = result.text;
+          this.onSearchInput({ target: { value: result.text } });
+        }
+      } catch (error) {
+        console.error('Error scanning barcode', error);
+      }
+    } else {
+      console.error('BarcodeScanner plugin not available');
+    }
   }
 }

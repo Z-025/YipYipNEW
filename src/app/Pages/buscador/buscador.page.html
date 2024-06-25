@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <ion-buttons slot="end">
       <ion-button (click)="goToHome()">
         <ion-icon name="home"></ion-icon>
       </ion-button>
@@ -11,7 +11,13 @@
 
 <ion-content class="ion-padding">
   <div class="search-container">
-    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchInput($event)" placeholder="Buscar..." class="searchbar"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="onSearchInput($event)" placeholder="Buscar..." class="searchbar">
+      <ion-buttons slot="end">
+        <ion-button (click)="startScan()">
+          <ion-icon name="camera"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-searchbar>
 
     <div *ngIf="searchResult">
       <ion-card *ngIf="searchResult.metadata">

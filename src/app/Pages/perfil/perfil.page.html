@@ -1,29 +1,32 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Perfil
-    </ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="goToHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="medium">
   <ion-card class="profile-content">
-    <div align="center" class="image">
+    <div align="center" class="image" (click)="presentAlertConfirm()">
       <ion-avatar>
-        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        <img [src]="photo ? photo : 'https://ionicframework.com/docs/img/demos/avatar.svg'" />
       </ion-avatar>
     </div>
 
     <ion-item lines="none" class="profile">
       <ion-label class="ion-text-center">
-        <ion-text color="secondary"> Username </ion-text>
+        <ion-text color="secondary"> {{ user.username }} </ion-text>
         <p>
-          <ion-text color="medium"> {{ user.username }} </ion-text>
+          <ion-text color="medium"> titulo academico </ion-text>
         </p>
       </ion-label>
     </ion-item>
 
-    <form #form="ngForm" (ngSubmit)="onSubmit">
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
       <ion-card class="options">
         <ion-card-content>
           <p>Nombre: {{ user.nombre }}</p>
@@ -35,6 +38,7 @@
           <p>Área de interés: {{ user.areaInteres }}</p>
         </ion-card-content>
       </ion-card>
+      <ion-button (click)="edit()" expand="full" class="custom-button">Editar</ion-button>
     </form>
   </ion-card> 
 </ion-content>

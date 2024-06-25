@@ -17,9 +17,13 @@ export class AppComponent {
     private route: ActivatedRoute,
   ) {}
 
-  ngOnInit() {
-        this.route.queryParams.subscribe(params => {
-      this.username = params['username'];
-    });
-  }
+  onMenuItemClick(id:any)
+  { 
+    //cerrar Sesión
+    if( (id==3) && (localStorage.getItem('sesion_activa')=='SI'))
+    {
+        localStorage.clear(); 
+    }
+}
+
 }

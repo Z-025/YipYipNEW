@@ -1,8 +1,9 @@
 .profile-content {
-    background: black;
+    background: middle;
     border-radius: 25px;
     padding-bottom: 18vh;
     height: fit-content;
+    margin: 2rem;
   }
   
   .image {
@@ -36,4 +37,9 @@
       }
     }
   }
+
+  ion-button {
+    --background:#E7663E;
+}
+
   

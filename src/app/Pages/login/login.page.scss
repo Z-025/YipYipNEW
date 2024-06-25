@@ -1,0 +1,45 @@
+.logo {
+    max-width: 50%;
+    height: auto;
+  }
+
+.animacion_zoom {
+    width: 100px;
+    height: 100px; 
+    margin: 30px auto;
+    animation: zoomInOut 3s infinite;
+}
+
+@keyframes zoomInOut {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.background {
+
+    color: middle;    
+
+}
+
+ion-button {
+    background:#E7663E;
+    display: flex;
+    color: black;
+    margin: 2rem;
+}
+
+ion-buttons  {
+    justify-content: space-between;
+}
+
+ion-card {
+    border-radius: 25px;
+    margin: 2rem;
+}

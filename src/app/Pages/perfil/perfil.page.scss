@@ -1,7 +1,8 @@
 .profile-content { 
-    background: black;
+    background: middle;
     border-radius: 25px;
     padding-bottom: 18vh;
+    margin: 2rem;
 }
 
 .image { 
@@ -33,11 +34,17 @@ ion-item.profile {
 ion-card.options {
     --background: var(--ion-color-secondary);
     border-radius: 25px;
+    margin: 2rem;
     p {
         font-size: 0,5rem;
         font-weight: bold;
-        margin-top: 10px;
+        margin: 10px;
         color: black;
     }
 
+}
+
+.custom-button {
+    --background:#E7663E;
+    margin: 7rem;
 }

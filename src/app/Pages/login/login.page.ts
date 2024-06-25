@@ -1,38 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { DbService } from 'src/app/Services/db.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: 'login.page.html',
-  styleUrls: ['login.page.scss'],
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
   username: string = '';
   password: string = '';
-  
-  constructor(private router: Router) { }
+  sesion_activa: any="";
+  mensaje: string='';
+
+  constructor(
+    private alertController: AlertController,
+    private router: Router,
+    private dbService: DbService
+  ) {}
 
   ngOnInit() {
-    this.username = '';
-    this.password = '';
+
   }
 
-  login() {
-    if (this.isValidForm()) {
-      // Navegar a la página Home y pasar el nombre de usuario como parámetro
-      this.router.navigate(['/home'], { queryParams: { username: this.username } });
+  async login() {
+    const usuario = await this.dbService.validarUsuario(this.username, this.password);
+    if (usuario) {
+      let NavigationExtras: NavigationExtras = {
+        state: {
+          usuarioEnviado: this.username,
+          passwordEnviado: this.password
+        }
+      };
+      this.router.navigate(['/home'], NavigationExtras);
+    } else {
+      this.presentAlert('No existe el usuario en la base de datos');
     }
   }
 
-  isValidForm(): boolean {
-    if (!this.username || this.username.length < 3 || this.username.length > 8) {
-      alert('El nombre de usuario debe tener entre 3 y 8 caracteres.');
-      return false;
-    }
-    if (!this.password || !/^\d{4}$/.test(this.password)) {
-      alert('La contraseña debe ser numérica de 4 dígitos.');
-      return false;
-    }
-    return true;
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Mensaje',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  signup() {
+    this.router.navigate(['/sign-up']);
   }
 }
