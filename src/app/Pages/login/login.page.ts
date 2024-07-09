@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { DbService } from 'src/app/Services/db.service';
 
@@ -8,34 +8,26 @@ import { DbService } from 'src/app/Services/db.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
   username: string = '';
   password: string = '';
-  sesion_activa: any="";
-  mensaje: string='';
 
   constructor(
-    private alertController: AlertController,
     private router: Router,
+    private alertController: AlertController,
     private dbService: DbService
   ) {}
-
-  ngOnInit() {
-
-  }
 
   async login() {
     const usuario = await this.dbService.validarUsuario(this.username, this.password);
     if (usuario) {
-      let NavigationExtras: NavigationExtras = {
-        state: {
-          usuarioEnviado: this.username,
-          passwordEnviado: this.password
-        }
-      };
-      this.router.navigate(['/home'], NavigationExtras);
+      // Usuario válido, guardar el nombre de usuario y marcar sesión activa
+      localStorage.setItem('username', this.username);
+      localStorage.setItem('sesion_activa', 'SI');
+      this.router.navigate(['/home']);
     } else {
-      this.presentAlert('No existe el usuario en la base de datos');
+      // Usuario inválido, mostrar mensaje de error
+      this.presentAlert('Usuario o contraseña incorrectos');
     }
   }
 

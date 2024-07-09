@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DbService } from 'src/app/Services/db.service';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-
+import { DbService } from 'src/app/Services/db.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,79 +9,75 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./sign-up.page.scss'],
 })
 export class SignUpPage {
-  usuarioRecibido: string='';
-  passwordRecibido: string='';
+  username: string = '';
+  password: string = '';
+  nombre: string = '';
+  apellido: string = '';
+  correo: string = '';
+  orcid: string = '';
+  fechaNacimiento: string = '';
+  nivelEducacion: string = '';
+  areaInteres: string = '';
 
-    username: any='';
-    nombre: any='';
-    apellido: any='';
-    nivelEducacion: any=''; 
-    fechaNacimiento: any='';
-    password: any='';
-    areaInteres: any='';
-    orcid: any='';
-    correo: any='';
+  constructor(
+    private router: Router,
+    private alertController: AlertController,
+    private dbService: DbService
+  ) {}
 
-    usuarioRecibidoPersistente: any='';
-
-    isDBReady: boolean = false;
-
-
-  constructor(private router:Router,
-              private activateroute:ActivatedRoute, 
-              private alertController:AlertController,
-              private dbService: DbService) {
-    this.activateroute.queryParams.subscribe( params =>{
-      if(this.router.getCurrentNavigation()?.extras?.state){
-        this.usuarioRecibido = this.router.getCurrentNavigation()?.extras?.state?.['usuarioEnviado'];
-        this.passwordRecibido = this.router.getCurrentNavigation()?.extras?.state?.['passwordEnviado']; 
-
-    console.log();
+  async guardarDatos() {
+    if (!this.validarDatos()) {
+      return;
     }
-  })
-}
 
-  ngOnInit() {
-    this.dbService.getIsDBReady().subscribe(isReady => {
-    this.isDBReady = isReady;
-    if (isReady) {
-  // Aquí puedes llamar a funciones para cargar datos, etc. desde la base de datos
-      }
+    const usuario = {
+      username: this.username,
+      password: this.password,
+      nombre: this.nombre,
+      apellido: this.apellido,
+      correo: this.correo,
+      orcid: this.orcid,
+      fechaNacimiento: this.fechaNacimiento,
+      nivelEducacion: this.nivelEducacion,
+      areaInteres: this.areaInteres
+    };
+
+    await this.dbService.insertUsuario(usuario);
+
+    // Guardar los datos del usuario en localStorage
+    localStorage.setItem('username', this.username);
+    localStorage.setItem('nombre', this.nombre);
+    localStorage.setItem('apellido', this.apellido);
+    localStorage.setItem('correo', this.correo);
+    localStorage.setItem('orcid', this.orcid);
+    localStorage.setItem('fechaNacimiento', this.fechaNacimiento);
+    localStorage.setItem('nivelEducacion', this.nivelEducacion);
+    localStorage.setItem('areaInteres', this.areaInteres);
+
+    this.presentAlert('Usuario registrado exitosamente');
+    this.router.navigate(['/login']); // Redirige a la página de login después de registrar el usuario
+  }
+
+  validarDatos(): boolean {
+    // Aquí puedes implementar lógica para validar los datos del formulario
+    if (this.username.trim() === '' || this.password.trim() === '') {
+      this.presentAlert('Usuario y contraseña son obligatorios');
+      return false;
+    }
+    // Implementa más validaciones según tus requerimientos
+    return true;
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Mensaje',
+      message: message,
+      buttons: ['OK']
     });
+    await alert.present();
   }
 
-async presentAlert(message: string) {
-const alert = await this.alertController.create({
-header: 'Mensaje',
-message: message,
-buttons: ['OK']
-});
-
-await alert.present();
-}
-
-
-guardar() {
-if (this.nombre.trim() === '' || this.apellido.trim() === '') {
-this.presentAlert('Error: nombre y apellido vacios');
-} else {
-this.guardarDatos();  
-}
-}
-
-guardarDatos() {
-this.dbService.insertUsuario(this.nombre, this.apellido, this.username, this.password, this.fechaNacimiento, this.orcid, this.areaInteres, this.correo, this.nivelEducacion)
-.then(() => {
-this.presentAlert('Datos guardados exitosamente');
-// Aquí puedes añadir lógica adicional, como mostrar un mensaje de éxito al usuario.
-})
-.catch(error => {
-this.presentAlert('Error al guardar datos:'+ error);
-// Aquí puedes manejar el error, por ejemplo, mostrar un mensaje de error al usuario.
-});
-}
-
-goToHome() {
+  goToHome() {
     this.router.navigate(['/home']);
-}
   }
+}

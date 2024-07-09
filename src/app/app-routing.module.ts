@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {PagenotfoundComponent} from './pagenotfound/pagenotfound.component'; 
+import { authGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -41,7 +42,8 @@ const routes: Routes = [
   },
   {
     path: 'historial',
-    loadChildren: () => import( './Pages/historial/historial.module').then( m => m.HistorialPageModule)
+    loadChildren: () => import( './Pages/historial/historial.module').then( m => m.HistorialPageModule),
+    canActivate: [authGuard]
   },
 
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
@@ -52,6 +54,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [authGuard]
 })
 export class AppRoutingModule {}

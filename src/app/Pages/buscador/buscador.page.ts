@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Services/api.service';
-import { Plugins, Capacitor } from '@capacitor/core';
-const { BarcodeScanner } = Plugins;
+import { HistorialService } from 'src/app/Services/historial.service';
 
 @Component({
   selector: 'app-buscador',
@@ -13,7 +12,7 @@ export class BuscadorPage {
   searchTerm: string = '';
   searchResult: any = null;
 
-  constructor(private router: Router, private apiService: ApiService) {}
+  constructor(private router: Router, private apiService: ApiService, private historialService: HistorialService) {}
 
   goToHome() {
     this.router.navigate(['home']);
@@ -33,6 +32,12 @@ export class BuscadorPage {
       (response: any) => {
         console.log('API Response:', response);
         this.searchResult = response;
+        if (response.metadata) {
+          const username = localStorage.getItem('username');
+          if (username) {
+            this.historialService.agregarBusqueda(username, response.metadata);
+          }
+        }
       },
       (error) => {
         console.error('Error fetching search results', error);
@@ -42,18 +47,11 @@ export class BuscadorPage {
   }
 
   async startScan() {
-    if (Capacitor.isPluginAvailable('BarcodeScanner')) {
-      try {
-        const result = await BarcodeScanner['startScan'](); // Corregido aquí
-        if (!result.cancelled) {
-          this.searchTerm = result.text;
-          this.onSearchInput({ target: { value: result.text } });
-        }
-      } catch (error) {
-        console.error('Error scanning barcode', error);
-      }
-    } else {
-      console.error('BarcodeScanner plugin not available');
-    }
+    // Implementar lógica de escaneo si es necesario
+  }
+
+  getAuthors(metadata: any): string {
+    if (!metadata || !metadata.author) return '';
+    return metadata.author.map((author: any) => `${author.given} ${author.family}`).join(', ');
   }
 }

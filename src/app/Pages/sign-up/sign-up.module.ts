@@ -10,7 +10,7 @@ import { SignUpPage } from './sign-up.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SignUpPageRoutingModule
+    SignUpPageRoutingModule,
   ],
   declarations: [SignUpPage]
 })

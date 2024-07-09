@@ -5,18 +5,26 @@
         <ion-icon name="home"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Historial</ion-title>
+    <ion-title>Historial de búsquedas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="center-container">
+  <div *ngFor="let item of historial">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Historial</ion-card-title>
+        <ion-card-title>{{ item.title }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        'Lapastora, M. (2021). Psicología del bebé adoptado. Desclée De Brouwer. Sáenz de Jubera Ocón, M., & Alonso Ruíz, R. A. (Coords.). (2021). Ocio y educación: experiencias, innovación y transferencia. Universidad de La Rioja. 1'
+        <p><strong>DOI:</strong> {{ item.DOI }}</p>
+        <p><strong>URL:</strong> <a [href]="item.URL" target="_blank">{{ item.URL }}</a></p>
+        <p><strong>Autores:</strong></p>
+        <ul>
+          <li *ngFor="let author of item.author">{{ author.given }} {{ author.family }}</li>
+        </ul>
+        <p><strong>ID:</strong> {{ item.id }}</p>
+        <p><strong>Año de publicación:</strong> {{ item.year }}</p>
+        <ion-button (click)="generarCitaciones(item.DOI)">Generar citaciones</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

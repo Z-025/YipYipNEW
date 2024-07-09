@@ -4,7 +4,6 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController } from '@ionic/angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -22,16 +21,16 @@ export class PerfilPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Aquí podrías inicializar datos del usuario u otros elementos necesarios al cargar la página
+    // Cargar los datos del usuario desde localStorage
     this.user = {
-      username: 'ejemplo',
-      nombre: 'Nombre Ejemplo',
-      apellido: 'Apellido Ejemplo',
-      nivelEducacion: 'Educación Ejemplo',
-      fechaNacimiento: '01/01/1990',
-      correo: 'ejemplo@correo.com',
-      orcid: '0000-0000-0000-0000',
-      areaInteres: 'Área de Interés Ejemplo'
+      username: localStorage.getItem('username') || '',
+      nombre: localStorage.getItem('nombre') || '',
+      apellido: localStorage.getItem('apellido') || '',
+      nivelEducacion: localStorage.getItem('nivelEducacion') || '',
+      fechaNacimiento: localStorage.getItem('fechaNacimiento') || '',
+      correo: localStorage.getItem('correo') || '',
+      orcid: localStorage.getItem('orcid') || '',
+      areaInteres: localStorage.getItem('areaInteres') || ''
     };
   }
 
