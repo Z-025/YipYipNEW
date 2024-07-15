@@ -34,4 +34,14 @@ export class DbService {
     }
     return false;
   }
+
+  async updateUsuario(updatedUsuario: any): Promise<void> {
+    let usuarios = await this._storage?.get('usuarios') || [];
+    const index = usuarios.findIndex((user: any) => user.username === updatedUsuario.username);
+    if (index !== -1) {
+      usuarios[index] = updatedUsuario;
+      await this._storage?.set('usuarios', usuarios);
+    }
+  }
+  
 }

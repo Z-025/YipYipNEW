@@ -46,9 +46,6 @@ export class BuscadorPage {
     );
   }
 
-  async startScan() {
-    // Implementar lógica de escaneo si es necesario
-  }
 
   getAuthors(metadata: any): string {
     if (!metadata || !metadata.author) return '';

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController } from '@ionic/angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DbService } from 'src/app/Services/db.service'; // Asegúrate de importar tu servicio
 
 @Component({
   selector: 'app-perfil',
@@ -18,20 +19,12 @@ export class PerfilPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private sanitizer: DomSanitizer,
+    private dbService: DbService
   ) { }
 
-  ngOnInit() {
-    // Cargar los datos del usuario desde localStorage
-    this.user = {
-      username: localStorage.getItem('username') || '',
-      nombre: localStorage.getItem('nombre') || '',
-      apellido: localStorage.getItem('apellido') || '',
-      nivelEducacion: localStorage.getItem('nivelEducacion') || '',
-      fechaNacimiento: localStorage.getItem('fechaNacimiento') || '',
-      correo: localStorage.getItem('correo') || '',
-      orcid: localStorage.getItem('orcid') || '',
-      areaInteres: localStorage.getItem('areaInteres') || ''
-    };
+  async ngOnInit() {
+    const username = localStorage.getItem('username') || '';
+    this.user = await this.dbService.getUsuario(username) || {};
   }
 
   goToHome() {
@@ -81,7 +74,6 @@ export class PerfilPage implements OnInit {
         source
       });
 
-      // Usar webPath para mostrar la nueva imagen en lugar de base64, ya que está cargada en memoria
       this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(capturedPhoto.webPath!);
 
     } catch (error) {
@@ -89,8 +81,9 @@ export class PerfilPage implements OnInit {
     }
   }
 
-  onSubmit() {
-    // Implementa la lógica para la función de submit si es necesario
+  async onSubmit() {
+    await this.dbService.updateUsuario(this.user);
   }
 
 }
+

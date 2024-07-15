@@ -21,24 +21,23 @@
       <ion-label class="ion-text-center">
         <ion-text color="secondary"> {{ user.username }} </ion-text>
         <p>
-          <ion-text color="medium"> titulo academico </ion-text>
+          <ion-text color="medium"> título académico </ion-text>
         </p>
       </ion-label>
     </ion-item>
 
-    <form #form="ngForm" (ngSubmit)="onSubmit()">
-      <ion-card class="options">
-        <ion-card-content>
-          <p>Nombre: {{ user.nombre }}</p>
-          <p>Apellido: {{ user.apellido }}</p>
-          <p>Nivel de educación: {{ user.nivelEducacion }}</p>
-          <p>Fecha de nacimiento: {{ user.fechaNacimiento }}</p>
-          <p>Correo Electrónico: {{ user.correo }}</p>
-          <p>ORCID ID: {{ user.orcid }}</p>
-          <p>Área de interés: {{ user.areaInteres }}</p>
-        </ion-card-content>
-      </ion-card>
-      <ion-button (click)="edit()" expand="full" class="custom-button">Editar</ion-button>
-    </form>
+    <ion-card class="options">
+      <ion-card-content>
+        <p>Nombre: {{ user.nombre }}</p>
+        <p>Apellido: {{ user.apellido }}</p>
+        <p>Nivel de educación: {{ user.nivelEducacion }}</p>
+        <p>Fecha de nacimiento: {{ user.fechaNacimiento }}</p>
+        <p>Correo Electrónico: {{ user.correo }}</p>
+        <p>ORCID ID: {{ user.orcid }}</p>
+        <p>Área de interés: {{ user.areaInteres }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button (click)="edit()" expand="full" class="custom-button">Editar</ion-button>
   </ion-card> 
 </ion-content>
